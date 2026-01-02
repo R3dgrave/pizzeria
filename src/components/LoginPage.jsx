@@ -7,14 +7,20 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (email === "" || password === "") {
       alert("Por favor, complete todos los campos");
       return;
     }
 
+    if (password.length < 6) {
+      alert("El password debe tener al menos 6 caracteres");
+      return;
+    }
+
     alert("Login exitoso");
-    setEmail(""); setPassword("");
+    setEmail(""); 
+    setPassword("");
   };
 
   return (
