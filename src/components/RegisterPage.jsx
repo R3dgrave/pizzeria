@@ -14,11 +14,16 @@ const RegisterPage = () => {
       return;
     }
 
+    if (password.length < 6) {
+      alert("El password debe tener al menos 6 caracteres");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Los passwords no coinciden");
       return;
     }
-    
+
     alert("Registro exitoso");
     setEmail("");
     setPassword("");
