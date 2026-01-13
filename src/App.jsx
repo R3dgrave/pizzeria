@@ -5,16 +5,20 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      {/*<Home />*/}
-      {/*<RegisterPage/>*/}
-      <LoginPage/>
-      <Footer/>
-    </>
+      <main className="flex-grow-1">
+        {/* <Home /> */}
+        {/* <RegisterPage /> */}
+        {/* <LoginPage /> */}
+        <Cart />
+      </main>
+      <Footer />
+    </div>
   );
 };
 

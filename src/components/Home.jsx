@@ -1,9 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import CardPizza from "./CardPizza";
-import pizza1 from "../assets/pizza-1.jpg";
-import pizza2 from "../assets/pizza-2.jpg";
-import pizza3 from "../assets/pizza-3.jpg";
+import { pizzas } from "../data/pizzas"
 
 const Home = () => {
   const estilosHome = {
@@ -27,41 +25,15 @@ const Home = () => {
     },
   };
 
-  const pizzas = [
-    {
-      image: pizza1,
-      name: "Margherita Clásica",
-      ingredients: [
-        "Tomate",
-        "Mozzarella",
-        "Albahaca Fresca",
-        "Aceite de Oliva",
-      ],
-      price: 12500,
-    },
-    {
-      image: pizza2,
-      name: "Pepperoni Picante",
-      ingredients: [
-        "Salsa de Tomate",
-        "Pepperoni",
-        "Mozzarella",
-        "Pimienta Roja",
-      ],
-      price: 15990,
-    },
-    {
-      image: pizza3,
-      name: "Vegetariana Gourmet",
-      ingredients: [
-        "Pimientos",
-        "Cebolla Morada",
-        "Champiñones",
-        "Aceitunas Negras",
-      ],
-      price: 13500,
-    },
-  ];
+  const data_pizzas = pizzas.map((pizza, index) => (
+    <CardPizza
+      key={index}
+      image={pizza.img}
+      name={pizza.name}
+      ingredients={pizza.ingredients}
+      price={pizza.price}
+    />
+  ))
 
   return (
     <div style={estilosHome.mainContainer}>
@@ -72,15 +44,7 @@ const Home = () => {
       </h2>
 
       <div style={estilosHome.cardContainerGrid}>
-        {pizzas.map((pizza, index) => (
-          <CardPizza
-            key={index}
-            image={pizza.image}
-            name={pizza.name}
-            ingredients={pizza.ingredients}
-            price={pizza.price}
-          />
-        ))}
+        {data_pizzas}
       </div>
     </div>
   );
