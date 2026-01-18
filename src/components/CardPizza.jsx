@@ -1,121 +1,44 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
+import { Card, Button, ListGroup } from "react-bootstrap";
 import { FaEye, FaCartShopping } from "react-icons/fa6";
 import { formatCurrency } from "../utils/formatCurrency";
+import { GiFullPizza } from "react-icons/gi";
 
 const CardPizza = ({ image, name, ingredients, price }) => {
-  const estilos = {
-    cardContainer: {
-      width: "350px",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-      overflow: "hidden",
-      backgroundColor: "white",
-      margin: "20px",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-    },
-
-    imageContainer: {
-      width: "100%",
-      height: "200px",
-      overflow: "hidden",
-    },
-
-    imageStyle: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-    },
-
-    content: {
-      padding: "15px",
-    },
-
-    nameStyle: {
-      fontSize: "1.5rem",
-      fontWeight: "bold",
-      color: "#dc3545",
-      marginBottom: "10px",
-      textAlign: "center",
-    },
-
-    ingredientsList: {
-      fontSize: "0.9rem",
-      color: "#6c757d",
-      listStyleType: "none",
-      paddingLeft: "0",
-      marginBottom: "15px",
-    },
-
-    ingredientItem: {
-      marginBottom: "5px",
-      borderBottom: "1px dotted #e9ecef",
-      paddingBottom: "3px",
-    },
-
-    priceStyle: {
-      fontSize: "1.8rem",
-      fontWeight: "bold",
-      color: "#28a745",
-      textAlign: "center",
-      margin: "15px 0",
-    },
-    buttonsGroup: {
-      display: "flex",
-      justifyContent: "space-between",
-      padding: "15px",
-      backgroundColor: "#f8f9fa",
-      borderTop: "1px solid #e9ecef",
-    },
-
-    buttonContent: {
-      display: "flex",
-      alignItems: "center",
-      gap: "5px",
-    },
-  };
-
-  const formattedPrice = formatCurrency(price);
-
   return (
-    <div style={estilos.cardContainer}>
-      <div style={estilos.imageContainer}>
-        <img src={image} alt={`Pizza ${name}`} style={estilos.imageStyle} />
-      </div>
+    <Card className="h-100 shadow-sm" style={{ width: "100%", maxWidth: "400px", border: "none" }}>
+      <Card.Img variant="top" src={image} style={{ height: "200px", objectFit: "cover" }} />
 
-      <div style={estilos.content}>
-        <h3 style={estilos.nameStyle}>{name}</h3>
+      <Card.Body className="d-flex flex-column text-center">
+        <Card.Title className="text-danger fw-bold fs-3 text-capitalize">
+          {name}
+        </Card.Title>
 
-        <h5 style={{ fontSize: "1.1rem", marginBottom: "8px" }}>
-          Ingredientes:
-        </h5>
-        <ul style={estilos.ingredientsList}>
+        <hr />
+
+        <Card.Text className="text-start mb-1 fw-bold">Ingredientes:</Card.Text>
+        <ListGroup variant="flush" className="text-start mb-3">
           {ingredients.map((ing, index) => (
-            <li key={index} style={estilos.ingredientItem}>
-              • {ing}
-            </li>
+            <ListGroup.Item key={index} className="border-0 p-1 text-muted">
+              <GiFullPizza /> {ing}
+            </ListGroup.Item>
           ))}
-        </ul>
-      </div>
+        </ListGroup>
 
-      <p style={estilos.priceStyle}>{formattedPrice}</p>
+        <Card.Text className="fs-2 fw-bold text-success mt-auto">
+          {formatCurrency(price)}
+        </Card.Text>
+      </Card.Body>
 
-      <div style={estilos.buttonsGroup}>
-        <Button variant="outline-primary" size="sm">
-          <span style={estilos.buttonContent}>
-            <FaEye /> Ver más
-          </span>
+      <Card.Footer className="w-full d-flex justify-content-between bg-white border-top-0 pb-4">
+        <Button variant="outline-primary" size="sm" className="d-flex align-items-center gap-1">
+          <FaEye /> Ver más
         </Button>
-
-        <Button variant="success" size="sm">
-          <span style={estilos.buttonContent}>
-            <FaCartShopping /> Agregar al carrito
-          </span>
+        <Button variant="success" size="sm" className="d-flex align-items-center gap-1">
+          <FaCartShopping /> Añadir
         </Button>
-      </div>
-    </div>
+      </Card.Footer>
+    </Card>
   );
 };
 
