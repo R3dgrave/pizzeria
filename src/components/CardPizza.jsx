@@ -3,8 +3,9 @@ import { Card, Button, ListGroup } from "react-bootstrap";
 import { FaEye, FaCartShopping } from "react-icons/fa6";
 import { formatCurrency } from "../utils/formatCurrency";
 import { GiFullPizza } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
-const CardPizza = ({ image, name, ingredients, price }) => {
+const CardPizza = ({ id, image, name, ingredients, price }) => {
   return (
     <Card className="h-100 shadow-sm" style={{ width: "100%", maxWidth: "400px", border: "none" }}>
       <Card.Img variant="top" src={image} style={{ height: "200px", objectFit: "cover" }} />
@@ -31,7 +32,7 @@ const CardPizza = ({ image, name, ingredients, price }) => {
       </Card.Body>
 
       <Card.Footer className="w-full d-flex justify-content-between bg-white border-top-0 pb-4">
-        <Button variant="outline-primary" size="sm" className="d-flex align-items-center gap-1">
+        <Button as={Link} to={`/pizza/${id}`} variant="outline-primary" size="sm" className="d-flex align-items-center gap-1">
           <FaEye /> Ver más
         </Button>
         <Button variant="success" size="sm" className="d-flex align-items-center gap-1">

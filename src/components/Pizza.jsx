@@ -1,32 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, ListGroup, Badge, Spinner, Alert } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  ListGroup,
+  Badge,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import { FaCartPlus } from "react-icons/fa";
 import { formatCurrency } from "../utils/formatCurrency";
 import { GiFullPizza } from "react-icons/gi";
+import { useParams } from "react-router-dom";
 
 const Pizza = () => {
+  const { pizzaId } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/pizzas/p001");
-      if (!response.ok) {
-        throw new Error("Ocurrio un error y no se pudo obtener la información de la pizza, intente nuevamente.");
-      }
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/pizzas/${pizzaId}`,
+        );
+        if (!response.ok) {
+          throw new Error(
+            "Ocurrio un error y no se pudo obtener la información de la pizza, intente nuevamente.",
+          );
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
-  }, []);
+  }, [pizzaId]);
 
   if (loading) {
     return (
@@ -40,7 +55,9 @@ const Pizza = () => {
   if (error) {
     return (
       <Container className="my-5">
-        <Alert variant="danger">Error al cargar la información, recargue la pagina</Alert>
+        <Alert variant="danger">
+          Error al cargar la información, recargue la pagina
+        </Alert>
       </Container>
     );
   }
@@ -60,7 +77,10 @@ const Pizza = () => {
           <Col md={6} className="d-flex flex-column justify-content-center p-4">
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <Card.Title as="h1" className="text-capitalize text-danger mb-0">
+                <Card.Title
+                  as="h1"
+                  className="text-capitalize text-danger mb-0"
+                >
                   {data.name}
                 </Card.Title>
                 <Badge bg="success" className="fs-5">
@@ -78,7 +98,8 @@ const Pizza = () => {
                   {data.ingredients?.map((ing, index) => (
                     <Col key={index}>
                       <ListGroup.Item className="border-0 px-0">
-                        <GiFullPizza /> <span className="text-capitalize">{ing}</span>
+                        <GiFullPizza />{" "}
+                        <span className="text-capitalize">{ing}</span>
                       </ListGroup.Item>
                     </Col>
                   ))}
@@ -86,7 +107,11 @@ const Pizza = () => {
               </ListGroup>
 
               <div className="d-grid">
-                <Button variant="dark" size="lg" className="d-flex align-items-center justify-content-center gap-2">
+                <Button
+                  variant="dark"
+                  size="lg"
+                  className="d-flex align-items-center justify-content-center gap-2"
+                >
                   <FaCartPlus /> Añadir al Carrito
                 </Button>
               </div>

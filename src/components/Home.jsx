@@ -55,6 +55,7 @@ const Home = () => {
             {data.map((pizza) => (
               <Col key={pizza.id} className="d-flex justify-content-center">
                 <CardPizza
+                  id={pizza.id}
                   image={pizza.img}
                   name={pizza.name}
                   ingredients={pizza.ingredients}
