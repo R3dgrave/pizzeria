@@ -5,10 +5,10 @@ import { CiLogin, CiLogout } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { formatCurrency } from "../utils/formatCurrency";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navigation = () => {
-  const total = 25000;
-  const token = true;
+  const { total, token } = useCart();
 
   const formattedTotal = formatCurrency(total);
 

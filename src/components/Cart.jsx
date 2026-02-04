@@ -1,26 +1,11 @@
-import { useState } from "react";
 import { Container, Row, Col, Button, Image, ListGroup } from 'react-bootstrap';
 import { formatCurrency } from "../utils/formatCurrency";
-import { pizzaCart } from "../data/pizzas";
+import { useCart } from "../context/CartContext";
 
 const Cart = () => {
-  const [pizzas, setPizzas] = useState(pizzaCart);
-  const total = pizzas.reduce((acc, pizza) => acc + (pizza.price * pizza.count), 0);
+  const { cart, total, aumentarCantidad, disminuirCantidad } = useCart();
 
-  const aumentarCantidad = (id) => {
-    const nuevosItems = pizzas.map(pizza => pizza.id === id ? { ...pizza, count: pizza.count + 1 } : pizza);
-    setPizzas(nuevosItems);
-  };
-
-  const disminuirCantidad = (id) => {
-    const nuevosItems = pizzas.map(pizza =>
-      pizza.id === id ? { ...pizza, count: Math.max(0, pizza.count - 1) } : pizza
-    );//.filter(pizza => pizza.count > 0);
-
-    setPizzas(nuevosItems);
-  };
-
-  const dataCart = pizzas.map((pizza) => (
+  const dataCart = cart.map((pizza) => (
     <ListGroup.Item key={pizza.id} className="py-3">
       <Row className="align-items-center">
         <Col xs={3} md={2}>
@@ -46,7 +31,7 @@ const Cart = () => {
       <h2 className="mb-4">Detalles del pedido:</h2>
 
       <ListGroup variant="flush" className="mb-4">
-        {dataCart}
+        { dataCart.length > 0 ? dataCart : <p>El carrito está vacío.</p> }
       </ListGroup>
 
       <div className="d-flex justify-content-between align-items-center mt-4">
