@@ -4,7 +4,6 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const token = true;
 
   const addToCart = (pizza) => {
     setCart((prevCart) => {
@@ -42,7 +41,6 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     total,
-    token,
     cart,
     addToCart,
     aumentarCantidad,

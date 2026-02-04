@@ -10,8 +10,11 @@ import LoginPage from "./components/LoginPage";
 import Cart from "./components/Cart";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
+import { useUser } from "./context/UserContext";
 
 const App = () => {
+  const { token } = useUser();
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
@@ -21,9 +24,9 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/profile" element={token ? <Profile/> : <LoginPage />}/>
           <Route path="/pizza/:pizzaId" element={<Pizza />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 
 const Cart = () => {
   const { cart, total, aumentarCantidad, disminuirCantidad } = useCart();
+  const { token } = useCart();
 
   const dataCart = cart.map((pizza) => (
     <ListGroup.Item key={pizza.id} className="py-3">
@@ -36,9 +37,7 @@ const Cart = () => {
 
       <div className="d-flex justify-content-between align-items-center mt-4">
         <h3 className="fw-bold">Total: {formatCurrency(total)}</h3>
-        <Button variant="dark" size="lg">
-          Pagar
-        </Button>
+        { token ? <Button variant="success" className="fw-bold">Pagar</Button> : <p className="text-muted">Inicia sesión para pagar</p> }
       </div>
     </Container>
   );

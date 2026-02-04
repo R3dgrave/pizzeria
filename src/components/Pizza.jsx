@@ -21,6 +21,7 @@ const Pizza = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //Obtener Pizza por ID
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -6,9 +6,11 @@ import { CgProfile } from "react-icons/cg";
 import { formatCurrency } from "../utils/formatCurrency";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 
 const Navigation = () => {
-  const { total, token } = useCart();
+  const { total } = useCart();
+  const { token, logout } = useUser();
 
   const formattedTotal = formatCurrency(total);
 
@@ -27,16 +29,6 @@ const Navigation = () => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto gap-2 mt-2 mt-lg-0">
-            <Button
-              as={Link}
-              to="/"
-              variant="outline-light"
-              size="sm"
-              className="d-flex align-items-center gap-1"
-            >
-              <IoPizza /> Home
-            </Button>
-
             {token ? (
               <>
                 <Button
@@ -46,17 +38,18 @@ const Navigation = () => {
                   size="sm"
                   className="d-flex align-items-center gap-1"
                 >
-                  <CgProfile /> Profile
+                  <CgProfile /> Perfil
                 </Button>
 
                 <Button
                   as={Link}
-                  to="/logout"
+                  to="/login"
                   variant="outline-light"
                   size="sm"
                   className="d-flex align-items-center gap-1"
+                  onClick={logout}
                 >
-                  <CiLogout /> Logout
+                  <CiLogout /> Cerrar Sesión
                 </Button>
               </>
             ) : (
@@ -68,7 +61,7 @@ const Navigation = () => {
                   size="sm"
                   className="d-flex align-items-center gap-1"
                 >
-                  <CgProfile /> Login
+                  <CgProfile /> Iniciar Sesión
                 </Button>
 
                 <Button
@@ -78,7 +71,7 @@ const Navigation = () => {
                   size="sm"
                   className="d-flex align-items-center gap-1"
                 >
-                  <CiLogout /> Register
+                  <CiLogout /> Registrarse
                 </Button>
               </>
             )}
