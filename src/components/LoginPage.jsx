@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { useUser } from "../context/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { loginFetch } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,8 +21,8 @@ const LoginPage = () => {
       return;
     }
 
-    alert("Login exitoso");
-    setEmail(""); 
+    loginFetch(email, password);
+    setEmail("");
     setPassword("");
   };
 

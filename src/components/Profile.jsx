@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Button, Stack } from "react-bootstrap";
-// Opcional: import { BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
+import { useUser } from "../context/UserContext";
 
 const Profile = () => {
+  const { user, logout } = useUser();
+  const letra = user.email.slice(0, 1);
+
+  if (!user || !user.email) {
+    return <div>Cargando perfil...</div>;
+  }
+
   return (
     <>
       <div className="d-flex justify-content-center align-items-center mt-5">
@@ -18,13 +25,11 @@ const Profile = () => {
                 className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
                 style={{ width: "45px", height: "45px", fontSize: "1.2rem" }}
               >
-                D
+                {letra}
               </div>
               <div>
                 <Card.Title className="mb-0 h6">Mi Perfil</Card.Title>
-                <Card.Text className="text-muted small">
-                  correo@gmail.com
-                </Card.Text>
+                <Card.Text className="text-muted small">{user.email}</Card.Text>
               </div>
             </Stack>
 
@@ -32,10 +37,11 @@ const Profile = () => {
 
             <Button
               as={Link}
-              to="/logout"
+              to="/login"
               variant="outline-danger"
               size="sm"
               className="w-100 d-flex align-items-center justify-content-center gap-2"
+              onClick={logout}
             >
               <span>Cerrar sesión</span>
             </Button>

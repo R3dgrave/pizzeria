@@ -10,7 +10,7 @@ import { useUser } from "../context/UserContext";
 
 const Navigation = () => {
   const { total } = useCart();
-  const { token, logout } = useUser();
+  const { isAuthenticated, logout } = useUser();
 
   const formattedTotal = formatCurrency(total);
 
@@ -29,7 +29,7 @@ const Navigation = () => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto gap-2 mt-2 mt-lg-0">
-            {token ? (
+            {isAuthenticated ? (
               <>
                 <Button
                   as={Link}

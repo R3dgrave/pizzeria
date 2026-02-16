@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { useUser } from "../context/UserContext";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const { registerFetch } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +27,7 @@ const RegisterPage = () => {
       return;
     }
 
-    alert("Registro exitoso");
+    registerFetch(email, password);
     setEmail("");
     setPassword("");
     setConfirmPassword("");

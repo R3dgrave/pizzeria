@@ -1,9 +1,41 @@
 import { createContext, useContext, useState } from "react";
+import { useUser } from "./UserContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const { user } = useUser();
+
+  const cartFetch = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token || !user) {
+      alert("Debes iniciar sesión para enviar el pedido");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart: cart }),
+      });
+
+      if (response.ok) {
+        alert("carrito enviado");
+        setCart([]);
+      } else {
+        alert("Error al enviar el pedido");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("error al enviar el carrito", error);
+    }
+  };
 
   const addToCart = (pizza) => {
     setCart((prevCart) => {
@@ -45,8 +77,16 @@ export const CartProvider = ({ children }) => {
     addToCart,
     aumentarCantidad,
     disminuirCantidad,
+    cartFetch,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error("useCart debe ser usado dentro de un CartProvider");
+  }
+  return context;
+};

@@ -13,7 +13,7 @@ import Profile from "./components/Profile";
 import { useUser } from "./context/UserContext";
 
 const App = () => {
-  const { token } = useUser();
+  const { isAuthenticated } = useUser();
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={token ? <Profile/> : <LoginPage />}/>
+          <Route path="/profile" element={isAuthenticated ? <Profile/> : <LoginPage />}/>
           <Route path="/pizza/:pizzaId" element={<Pizza />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

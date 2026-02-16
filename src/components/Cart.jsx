@@ -1,10 +1,12 @@
-import { Container, Row, Col, Button, Image, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, Image, ListGroup } from "react-bootstrap";
 import { formatCurrency } from "../utils/formatCurrency";
 import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 
 const Cart = () => {
-  const { cart, total, aumentarCantidad, disminuirCantidad } = useCart();
-  const { token } = useCart();
+  const { cart, total, aumentarCantidad, disminuirCantidad, cartFetch } =
+    useCart();
+  const { isAuthenticated } = useUser();
 
   const dataCart = cart.map((pizza) => (
     <ListGroup.Item key={pizza.id} className="py-3">
@@ -17,11 +19,29 @@ const Cart = () => {
           <h5 className="mb-0 text-capitalize">{pizza.name}</h5>
         </Col>
 
-        <Col xs={5} md={5} className="d-flex align-items-center justify-content-end">
-          <p className="mb-0 me-3 fw-bold">{formatCurrency(pizza.price * pizza.count)}</p>
-          <Button variant="outline-danger" size="sm" onClick={() => disminuirCantidad(pizza.id)}>-</Button>
+        <Col
+          xs={5}
+          md={5}
+          className="d-flex align-items-center justify-content-end"
+        >
+          <p className="mb-0 me-3 fw-bold">
+            {formatCurrency(pizza.price * pizza.count)}
+          </p>
+          <Button
+            variant="outline-danger"
+            size="sm"
+            onClick={() => disminuirCantidad(pizza.id)}
+          >
+            -
+          </Button>
           <span className="mx-3 fw-bold">{pizza.count}</span>
-          <Button variant="outline-primary" size="sm" onClick={() => aumentarCantidad(pizza.id)}>+</Button>
+          <Button
+            variant="outline-primary"
+            size="sm"
+            onClick={() => aumentarCantidad(pizza.id)}
+          >
+            +
+          </Button>
         </Col>
       </Row>
     </ListGroup.Item>
@@ -32,12 +52,24 @@ const Cart = () => {
       <h2 className="mb-4">Detalles del pedido:</h2>
 
       <ListGroup variant="flush" className="mb-4">
-        { dataCart.length > 0 ? dataCart : <p>El carrito está vacío.</p> }
+        {dataCart.length > 0 ? dataCart : <p>El carrito está vacío.</p>}
       </ListGroup>
 
       <div className="d-flex justify-content-between align-items-center mt-4">
         <h3 className="fw-bold">Total: {formatCurrency(total)}</h3>
-        { token ? <Button variant="success" className="fw-bold">Pagar</Button> : <p className="text-muted">Inicia sesión para pagar</p> }
+        {isAuthenticated ? (
+          dataCart.length > 0 ? (
+            <Button variant="success" className="fw-bold" onClick={cartFetch}>
+              Pagar
+            </Button>
+          ) : (
+            <Button variant="success" className="fw-bold" disabled>
+              Pagar
+            </Button>
+          )
+        ) : (
+          <p className="text-muted">Inicia sesión para pagar</p>
+        )}
       </div>
     </Container>
   );
